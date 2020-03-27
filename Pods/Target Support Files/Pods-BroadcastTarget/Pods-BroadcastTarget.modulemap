@@ -1,0 +1,6 @@
+framework module Pods_BroadcastTarget {
+  umbrella header "Pods-BroadcastTarget-umbrella.h"
+
+  export *
+  module * { export * }
+}

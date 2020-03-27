@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>BroadcastTarget.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>BroadcastTargetSetupUI.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>ReplayKitDemo.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>9FB1A53F242B2CF00026727E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FB1A55A242B2CF10026727E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FB1A565242B2CF10026727E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FB1A57B242B2D490026727E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FB1A588242B2D490026727E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
