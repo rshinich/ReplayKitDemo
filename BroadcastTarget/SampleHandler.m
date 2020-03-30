@@ -10,13 +10,16 @@
 #import "SampleHandler.h"
 #import <VideoToolbox/VideoToolbox.h>
 #import <GCDAsyncSocket.h>
+#import "LLBSDMessage.h"
+#import "LLBSDConnection.h"
 #import "H264EncodeTool.h"
 
 
-@interface SampleHandler()<GCDAsyncSocketDelegate,H264EncodeCallBackDelegate>
+@interface SampleHandler()<GCDAsyncSocketDelegate,H264EncodeCallBackDelegate,LLBSDConnectionDelegate>
 
-@property (nonatomic ,strong) H264EncodeTool *h264Encoder;
-@property (nonatomic ,strong) GCDAsyncSocket *extensionSocket;
+@property (nonatomic ,strong) H264EncodeTool            *h264Encoder;
+@property (nonatomic ,strong) GCDAsyncSocket            *extensionSocket;
+@property (nonatomic ,strong) LLBSDConnectionClient     *llbsdClient;
 
 @end
 
@@ -32,7 +35,8 @@
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
     // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
     [self setupEncoder];
-    [self setupGCDAsyncSocket];
+//    [self setupGCDAsyncSocket];
+    [self setupLLBSDMessageing];
 }
 
 - (void)broadcastPaused {
@@ -92,6 +96,19 @@
     }
 }
 
+- (void)setupLLBSDMessageing {
+
+    self.llbsdClient = [[LLBSDConnectionClient alloc] initWithApplicationGroupIdentifier:@"group.com.zzr.ReplayKitDemo" connectionIdentifier:1];
+    self.llbsdClient.delegate = self;
+
+    [self.llbsdClient start:^(NSError *error) {
+        if(error) {
+            NSLog(@"start error = %@",error);
+        }
+    }];
+}
+
+
 //编码sampleBuffer
 - (void)encode:(CMSampleBufferRef )sampleBuffer {
 
@@ -117,37 +134,17 @@
 
 - (void)sendData:(NSData *)data {
 
-    [self.extensionSocket writeData:data withTimeout:-1 tag:0];
-}
+    //via GCDAsyncSocket
+//    [self.extensionSocket writeData:data withTimeout:-1 tag:0];
 
-#pragma mark - GCDAsyncSocketDelegate
-
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
-{
-    NSLog(@"链接成功");
-    NSLog(@"服务器IP: %@-------端口: %d",host,port);
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
-{
-    NSLog(@"发送数据 tag = %zi",tag);
-    [sock readDataWithTimeout:-1 tag:tag];
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
-{
-    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"读取数据 data = %@ tag = %zi",str,tag);
-    // 读取到服务端数据值后,能再次读取
-    [sock readDataWithTimeout:- 1 tag:tag];
-
-}
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
-{
-    NSLog(@"断开连接");
-    self.extensionSocket.delegate = nil;
-    self.extensionSocket = nil;
+    //via LLBSD
+    NSDictionary *dataDic = @{@"data": data};
+    LLBSDMessage *message = [LLBSDMessage messageWithName:@"message" userInfo:dataDic];
+    [self.llbsdClient sendMessage:message completion:^(NSError *error) {
+        if(error) {
+            NSLog(@"sendMessageError = %@",error);
+        }
+    }];
 }
 
 #pragma mark - H264EncodeCallBackDelegate
@@ -187,6 +184,55 @@
 
     [self sendData:h264Data];
 }
+
+#pragma mark - GCDAsyncSocketDelegate
+
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
+{
+    NSLog(@"链接成功");
+    NSLog(@"服务器IP: %@-------端口: %d",host,port);
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+    NSLog(@"发送数据 tag = %zi",tag);
+    [sock readDataWithTimeout:-1 tag:tag];
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+{
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"读取数据 data = %@ tag = %zi",str,tag);
+    // 读取到服务端数据值后,能再次读取
+    [sock readDataWithTimeout:- 1 tag:tag];
+
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+{
+    NSLog(@"断开连接");
+    self.extensionSocket.delegate = nil;
+    self.extensionSocket = nil;
+}
+
+#pragma mark - LLBSDConnectionDelegate
+
+- (void)connection:(LLBSDConnection *)connection didReceiveMessage:(LLBSDMessage *)message fromProcess:(LLBSDProcessInfo *)processInfo
+{
+    if (![message.name isEqualToString:@"message"]) {
+        return;
+    }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+    });
+}
+
+- (void)connection:(LLBSDConnection *)connection didFailToReceiveMessageWithError:(NSError *)error
+{
+    NSLog(@"didFailToReceiveMessageWithError = %@",error);
+}
+
+
 
 
 @end

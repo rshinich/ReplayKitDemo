@@ -13,6 +13,16 @@
 		9F1B7A97242C3E4F00AAA5C1 /* AAPLEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7A96242C3E4F00AAA5C1 /* AAPLEAGLLayer.m */; };
 		9F1B7A9A242C3EB300AAA5C1 /* H264DecodeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7A99242C3EB300AAA5C1 /* H264DecodeTool.m */; };
 		9F1B7A9D242C7C8C00AAA5C1 /* H264EncodeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7A9B242C7C8B00AAA5C1 /* H264EncodeTool.m */; };
+		9F1B7AFB242DB08200AAA5C1 /* LLBSDMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF5242DB08200AAA5C1 /* LLBSDMessaging.m */; };
+		9F1B7AFC242DB08200AAA5C1 /* LLBSDProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF6242DB08200AAA5C1 /* LLBSDProcessInfo.m */; };
+		9F1B7AFD242DB08200AAA5C1 /* LLBSDMessaging-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */; };
+		9F1B7AFE242DB08200AAA5C1 /* LLBSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */; };
+		9F1B7B00242DB08200AAA5C1 /* LLBSDConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */; };
+		9F34E90A242DB27600A91CFC /* LLBSDMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF5242DB08200AAA5C1 /* LLBSDMessaging.m */; };
+		9F34E90B242DB27900A91CFC /* LLBSDProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF6242DB08200AAA5C1 /* LLBSDProcessInfo.m */; };
+		9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */; };
+		9F34E90D242DB27E00A91CFC /* LLBSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */; };
+		9F34E90E242DB28000A91CFC /* LLBSDConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */; };
 		9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A544242B2CF00026727E /* AppDelegate.m */; };
 		9FB1A54B242B2CF00026727E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A54A242B2CF00026727E /* ViewController.m */; };
 		9FB1A550242B2CF10026727E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB1A54F242B2CF10026727E /* Assets.xcassets */; };
@@ -92,6 +102,16 @@
 		9F1B7A99242C3EB300AAA5C1 /* H264DecodeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264DecodeTool.m; sourceTree = "<group>"; };
 		9F1B7A9B242C7C8B00AAA5C1 /* H264EncodeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264EncodeTool.m; sourceTree = "<group>"; };
 		9F1B7A9C242C7C8B00AAA5C1 /* H264EncodeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264EncodeTool.h; sourceTree = "<group>"; };
+		9F1B7AF0242DB08200AAA5C1 /* LLBSDMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBSDMessaging.h; sourceTree = "<group>"; };
+		9F1B7AF1242DB08200AAA5C1 /* LLBSDMessaging-Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LLBSDMessaging-Constants.h"; sourceTree = "<group>"; };
+		9F1B7AF2242DB08200AAA5C1 /* LLBSDProcessInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBSDProcessInfo.h; sourceTree = "<group>"; };
+		9F1B7AF3242DB08200AAA5C1 /* LLBSDConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBSDConnection.h; sourceTree = "<group>"; };
+		9F1B7AF4242DB08200AAA5C1 /* LLBSDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBSDMessage.h; sourceTree = "<group>"; };
+		9F1B7AF5242DB08200AAA5C1 /* LLBSDMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDMessaging.m; sourceTree = "<group>"; };
+		9F1B7AF6242DB08200AAA5C1 /* LLBSDProcessInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDProcessInfo.m; sourceTree = "<group>"; };
+		9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LLBSDMessaging-Constants.m"; sourceTree = "<group>"; };
+		9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDMessage.m; sourceTree = "<group>"; };
+		9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDConnection.m; sourceTree = "<group>"; };
 		9FB1A540242B2CF00026727E /* ReplayKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReplayKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB1A543242B2CF00026727E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9FB1A544242B2CF00026727E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -193,9 +213,28 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9F1B7AEF242DB08200AAA5C1 /* LLBSDMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				9F1B7AF0242DB08200AAA5C1 /* LLBSDMessaging.h */,
+				9F1B7AF1242DB08200AAA5C1 /* LLBSDMessaging-Constants.h */,
+				9F1B7AF2242DB08200AAA5C1 /* LLBSDProcessInfo.h */,
+				9F1B7AF3242DB08200AAA5C1 /* LLBSDConnection.h */,
+				9F1B7AF4242DB08200AAA5C1 /* LLBSDMessage.h */,
+				9F1B7AF5242DB08200AAA5C1 /* LLBSDMessaging.m */,
+				9F1B7AF6242DB08200AAA5C1 /* LLBSDProcessInfo.m */,
+				9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */,
+				9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */,
+				9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */,
+			);
+			name = LLBSDMessaging;
+			path = "../../../../Desktop/LLBSDMessaging-master/LLBSDMessaging";
+			sourceTree = "<group>";
+		};
 		9FB1A537242B2CF00026727E = {
 			isa = PBXGroup;
 			children = (
+				9F1B7AEF242DB08200AAA5C1 /* LLBSDMessaging */,
 				9FB1A542242B2CF00026727E /* ReplayKitDemo */,
 				9FB1A55E242B2CF10026727E /* ReplayKitDemoTests */,
 				9FB1A569242B2CF10026727E /* ReplayKitDemoUITests */,
@@ -639,9 +678,14 @@
 			files = (
 				9FB1A54B242B2CF00026727E /* ViewController.m in Sources */,
 				9F1B7A9A242C3EB300AAA5C1 /* H264DecodeTool.m in Sources */,
+				9F34E90B242DB27900A91CFC /* LLBSDProcessInfo.m in Sources */,
+				9F34E90A242DB27600A91CFC /* LLBSDMessaging.m in Sources */,
 				9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */,
 				9F1B7A97242C3E4F00AAA5C1 /* AAPLEAGLLayer.m in Sources */,
+				9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */,
+				9F34E90E242DB28000A91CFC /* LLBSDConnection.m in Sources */,
 				9FB1A556242B2CF10026727E /* main.m in Sources */,
+				9F34E90D242DB27E00A91CFC /* LLBSDMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,7 +710,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB1A583242B2D490026727E /* SampleHandler.m in Sources */,
+				9F1B7AFD242DB08200AAA5C1 /* LLBSDMessaging-Constants.m in Sources */,
+				9F1B7AFC242DB08200AAA5C1 /* LLBSDProcessInfo.m in Sources */,
+				9F1B7B00242DB08200AAA5C1 /* LLBSDConnection.m in Sources */,
 				9F1B7A9D242C7C8C00AAA5C1 /* H264EncodeTool.m in Sources */,
+				9F1B7AFB242DB08200AAA5C1 /* LLBSDMessaging.m in Sources */,
+				9F1B7AFE242DB08200AAA5C1 /* LLBSDMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,6 +1048,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo.BroadcastTarget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1019,6 +1069,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo.BroadcastTarget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

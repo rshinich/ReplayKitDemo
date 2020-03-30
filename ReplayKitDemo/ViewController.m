@@ -9,10 +9,12 @@
 #import "ViewController.h"
 #import <ReplayKit/ReplayKit.h>
 #import <GCDAsyncSocket.h>
+#import "LLBSDMessage.h"
+#import "LLBSDConnection.h"
 #import "AAPLEAGLLayer.h"
 #import "H264DecodeTool.h"
 
-@interface ViewController ()<H264DecodeFrameCallbackDelegate,GCDAsyncSocketDelegate>
+@interface ViewController ()<H264DecodeFrameCallbackDelegate,GCDAsyncSocketDelegate,LLBSDConnectionServerDelegate>
 
 @property (nonatomic ,strong) UITextView                *logTextView;
 @property (nonatomic ,strong) AAPLEAGLLayer             *playLayer;     //用于解码后播放
@@ -20,6 +22,7 @@
 @property (nonatomic ,strong) H264DecodeTool            *h264Decoder;
 
 @property (nonatomic ,strong) GCDAsyncSocket            *clientSocket;
+@property (nonatomic ,strong) LLBSDConnectionServer     *llbsdServer;
 
 @property(strong,nonatomic)NSMutableArray               *clientSocketArr;
 
@@ -33,7 +36,8 @@
     [self setupViews];
     [self initPlayLayer];
     [self configH264Decoder];
-    [self setupSocket];
+//    [self setupSocket];
+    [self setupLLBSDMessageing];
 }
 
 #pragma Mark -
@@ -75,6 +79,29 @@
         NSLog(@"error = %@",error);
     }
 }
+
+- (void)setupLLBSDMessageing {
+
+    self.llbsdServer = [[LLBSDConnectionServer alloc] initWithApplicationGroupIdentifier:@"group.com.zzr.ReplayKitDemo" connectionIdentifier:1];
+    self.llbsdServer.delegate = self;
+//    server.allowedMessageClasses = [NSSet setWithObject:[]]
+
+    [self.llbsdServer start:^(NSError *error) {
+        if (error) {
+            [self presentError:error];
+        }
+    }];
+}
+
+- (void)presentError:(NSError *)error
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:error.localizedDescription message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    });
+}
+
 
 #pragma mark - H264DecodeFrameCallbackDelegate
 
@@ -136,6 +163,35 @@
     NSLog(@"断开连接");
     self.clientSocket.delegate = nil;
     self.clientSocket = nil;
+}
+
+#pragma mark - LLBSDConnectionServerDelegate
+
+- (BOOL)server:(LLBSDConnectionServer *)server shouldAcceptNewConnection:(LLBSDProcessInfo *)connectionInfo
+{
+    NSLog(@"shouldAcceptNewConnection");
+    return YES;
+}
+
+- (void)connection:(LLBSDConnection *)connection didReceiveMessage:(LLBSDMessage *)message fromProcess:(LLBSDProcessInfo *)processInfo
+{
+    if (![message.name isEqualToString:@"message"]) {
+        return;
+    }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSString *text = self.logView.text;
+//        text = [text stringByAppendingString:@"\n\n"];
+//        text = [text stringByAppendingString:message.userInfo[@"text"]];
+//        text = [text stringByAppendingString:@"\n"];
+//        text = [text stringByAppendingString:[message.userInfo[@"special"] title]];
+//        self.logView.text = text;
+    });
+}
+
+- (void)connection:(LLBSDConnection *)connection didFailToReceiveMessageWithError:(NSError *)error
+{
+    [self presentError:error];
 }
 
 
