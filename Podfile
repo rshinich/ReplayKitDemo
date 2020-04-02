@@ -6,6 +6,7 @@ target 'BroadcastTarget' do
   use_frameworks!
 
 	pod 'CocoaAsyncSocket'
+  pod 'GoogleWebRTC'
 
 end
 
@@ -22,6 +23,8 @@ target 'ReplayKitDemo' do
   use_frameworks!
 
 	pod 'CocoaAsyncSocket'
+  pod 'GoogleWebRTC'
+
 
   target 'ReplayKitDemoTests' do
     inherit! :search_paths

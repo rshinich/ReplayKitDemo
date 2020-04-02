@@ -14,9 +14,15 @@
 #import "AAPLEAGLLayer.h"
 #import "H264DecodeTool.h"
 
-@interface ViewController ()<H264DecodeFrameCallbackDelegate,GCDAsyncSocketDelegate,LLBSDConnectionServerDelegate>
+#import <WebRTC/WebRTC.h>
+#import "ZZRSocketPacket.h"
+#import "NTESTPCircularBuffer.h"
+#import "ZZRI420Frame.h"
+
+@interface ViewController ()<H264DecodeFrameCallbackDelegate,GCDAsyncSocketDelegate,LLBSDConnectionServerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic ,strong) UITextView                *logTextView;
+@property (nonatomic ,strong) UIImageView               *showImageView;
 @property (nonatomic ,strong) AAPLEAGLLayer             *playLayer;     //用于解码后播放
 
 @property (nonatomic ,strong) H264DecodeTool            *h264Decoder;
@@ -24,7 +30,9 @@
 @property (nonatomic ,strong) GCDAsyncSocket            *clientSocket;
 @property (nonatomic ,strong) LLBSDConnectionServer     *llbsdServer;
 
-@property(strong,nonatomic)NSMutableArray               *clientSocketArr;
+@property (nonatomic ,strong) NSMutableArray               *clientSocketArr;
+
+@property (nonatomic, assign) NTESTPCircularBuffer *recvBuffer;
 
 @end
 
@@ -36,8 +44,8 @@
     [self setupViews];
     [self initPlayLayer];
     [self configH264Decoder];
-//    [self setupSocket];
-    [self setupLLBSDMessageing];
+    [self setupSocket];
+//    [self setupLLBSDMessageing];
 }
 
 #pragma Mark -
@@ -50,6 +58,10 @@
     self.logTextView.frame = CGRectMake(600, 100, 300, 400);
     self.logTextView.editable = NO;
     [self.view addSubview:self.logTextView];
+
+    self.showImageView = [[UIImageView alloc] init];
+    self.showImageView.frame = CGRectMake(200, 800, 320, 640);
+    [self.view addSubview:self.showImageView];
 
     RPSystemBroadcastPickerView *pickerView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(100, 100, 50, 50)];
     pickerView.preferredExtension = @"com.zzr.ReplayKitDemo.BroadcastTarget";
@@ -70,6 +82,9 @@
 }
 
 - (void)setupSocket {
+
+    _recvBuffer = (NTESTPCircularBuffer *)malloc(sizeof(NTESTPCircularBuffer)); // 需要释放
+    NTESTPCircularBufferInit(_recvBuffer, kRecvBufferMaxSize);
 
     self.clientSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
 
@@ -118,6 +133,8 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
 
+    NTESTPCircularBufferClear(self.recvBuffer);
+
     [self.clientSocketArr addObject:newSocket];
     [newSocket readDataWithTimeout:-1 tag:100];
 
@@ -150,16 +167,121 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    [self.h264Decoder decodeNalu:(uint8_t *)[data bytes] size:(uint32_t)data.length];
+//    [self.h264Decoder decodeNalu:(uint8_t *)[data bytes] size:(uint32_t)data.length];
+//
+//    CMTime inTime = CMTimeMakeWithSeconds(5, 600);
+//
+//    CVPixelBufferRef piexlBuffer = [self yuvPixelBufferWithData:data presentationTime:inTime width:640 height:500];
+//    UIImage *image = [self makeUIImageWithYUVPixelBuffer:piexlBuffer];
+//    self.showImageView.image = image;
+
+//    RTCCVPixelBuffer *rtcPiexlBuffer = [[RTCCVPixelBuffer alloc] initWithPixelBuffer:piexlBuffer];
+//
+//    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];//获取当前时间0秒后的时间
+//    NSTimeInterval time=[date timeIntervalSince1970]*1000;// *1000 是精确到毫秒，不乘就是精确到秒
+//
+//    RTCVideoFrame *videoFrame = [[RTCVideoFrame alloc] initWithBuffer:rtcPiexlBuffer rotation:RTCVideoRotation_0 timeStampNs:time];
+
 
     self.logTextView.text = [NSString stringWithFormat:@"%@\n%@",self.logTextView.text,data];
+
+    static uint64_t currentDataSize = 0;
+    static uint64_t targetDataSize = 0;
+
+    BOOL isHead = NO;
+
+    if(data.length == sizeof(ZZRSocketHead)) {
+        ZZRSocketHead *head = (ZZRSocketHead *)data.bytes;
+        if(head->version == 1 && head->command_id == 1 && head->service_id == 1) {
+            isHead = YES;
+            targetDataSize = head->data_len;
+            currentDataSize = 0;
+        }
+    } else {
+        currentDataSize += data.length;
+    }
+
+    if (isHead) {
+        //接收到新的一帧，将原来的缓存清空
+
+        [self handleRecvBuffer];
+
+        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+
+    } else if (currentDataSize >= targetDataSize && currentDataSize != -1) {
+        //加上新的数据之后，已经满足一帧
+        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+
+        currentDataSize = -1;
+        [self handleRecvBuffer];
+
+    } else {
+
+        //不够一帧，提那家不处理
+        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+    }
 
     // 读取到服务端数据值后,能再次读取
     [sock readDataWithTimeout:- 1 tag:tag];
 }
 
+- (void)handleRecvBuffer {
+
+    int32_t availableBytes = 0;
+    void * buffer = NTESTPCircularBufferTail(self.recvBuffer, &availableBytes);
+    int32_t headSize = sizeof(ZZRSocketHead);
+
+    if(availableBytes <= headSize) {
+        //        NSLog(@" > 不够文件头");
+        NTESTPCircularBufferClear(self.recvBuffer);
+        return;
+    }
+
+    ZZRSocketHead head;
+    memset(&head, 0, sizeof(head));
+    memcpy(&head, buffer, headSize);
+    uint64_t dataLen = head.data_len;
+
+    if(dataLen > availableBytes - headSize && dataLen >0) {
+        //        NSLog(@" > 不够数据体");
+        NTESTPCircularBufferClear(self.recvBuffer);
+        return;
+    }
+
+    void *data = malloc(dataLen);
+    memset(data, 0, dataLen);
+    memcpy(data, buffer + headSize, dataLen);
+    NTESTPCircularBufferClear(self.recvBuffer); // 处理完一帧数据就清空缓存
+
+//    if([self respondsToSelector:@selector(onRecvData:)]) {
+//        @autoreleasepool {
+//            [self onRecvData:[NSData dataWithBytes:data length:dataLen]];
+//        };
+//    }
+
+    free(data);
+}
+
+- (void)onRecvData:(NSData *)data
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        ZZRI420Frame *frame = [ZZRI420Frame initWithData:data];
+        CMSampleBufferRef sampleBuffer = [frame convertToSampleBuffer];
+        if (sampleBuffer == NULL) {
+            return;
+        }
+
+        //推流到RN
+
+        CFRelease(sampleBuffer);
+    });
+
+}
+
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
+    NTESTPCircularBufferClear(self.recvBuffer);
+
     NSLog(@"断开连接");
     self.clientSocket.delegate = nil;
     self.clientSocket = nil;

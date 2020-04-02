@@ -14,12 +14,17 @@
 #import "LLBSDConnection.h"
 #import "H264EncodeTool.h"
 
+#import "ZZRYUVConverter.h"
+#import "ZZRSocketPacket.h"
+
 
 @interface SampleHandler()<GCDAsyncSocketDelegate,H264EncodeCallBackDelegate,LLBSDConnectionDelegate>
 
 @property (nonatomic ,strong) H264EncodeTool            *h264Encoder;
 @property (nonatomic ,strong) GCDAsyncSocket            *extensionSocket;
 @property (nonatomic ,strong) LLBSDConnectionClient     *llbsdClient;
+
+@property (nonatomic ,strong) dispatch_queue_t          videoQueue;
 
 @end
 
@@ -34,9 +39,12 @@
 
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
     // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
-    [self setupEncoder];
-//    [self setupGCDAsyncSocket];
-    [self setupLLBSDMessageing];
+//    [self setupEncoder];
+
+    self.videoQueue = dispatch_queue_create("com.zzr.ReplayKitDemo.videoprocess", DISPATCH_QUEUE_SERIAL);
+
+    [self setupGCDAsyncSocket];
+//    [self setupLLBSDMessageing];
 }
 
 - (void)broadcastPaused {
@@ -59,7 +67,28 @@
     switch (sampleBufferType) {
         case RPSampleBufferTypeVideo: {
 
-            [self.h264Encoder encode:sampleBuffer];
+//            [self.h264Encoder encode:sampleBuffer];
+
+            CFRetain(sampleBuffer);
+
+            dispatch_async(self.videoQueue, ^{
+
+                CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+                ZZRI420Frame *videoFrame = [ZZRYUVConverter pixelBufferToI420:pixelBuffer
+                                                                     withCrop:9.0/16
+                                                                   targetSize:CGSizeMake(540, 960)
+                                                                  orientation:ZZRVideoPackOrientationPortrait];
+
+                CFRelease(sampleBuffer);
+
+                if(videoFrame) {
+                    NSData *raw = [videoFrame bytes];
+                    NSData *headerData = [ZZRSocketPacket packetWithBuffer:raw];
+                    [self sendData:headerData];
+                    [self sendData:raw];
+                }
+            });
+
             break;
         }
         case RPSampleBufferTypeAudioApp:
@@ -135,16 +164,16 @@
 - (void)sendData:(NSData *)data {
 
     //via GCDAsyncSocket
-//    [self.extensionSocket writeData:data withTimeout:-1 tag:0];
+    [self.extensionSocket writeData:data withTimeout:5 tag:0];
 
     //via LLBSD
-    NSDictionary *dataDic = @{@"data": data};
-    LLBSDMessage *message = [LLBSDMessage messageWithName:@"message" userInfo:dataDic];
-    [self.llbsdClient sendMessage:message completion:^(NSError *error) {
-        if(error) {
-            NSLog(@"sendMessageError = %@",error);
-        }
-    }];
+//    NSDictionary *dataDic = @{@"data": data};
+//    LLBSDMessage *message = [LLBSDMessage messageWithName:@"message" userInfo:dataDic];
+//    [self.llbsdClient sendMessage:message completion:^(NSError *error) {
+//        if(error) {
+//            NSLog(@"sendMessageError = %@",error);
+//        }
+//    }];
 }
 
 #pragma mark - H264EncodeCallBackDelegate

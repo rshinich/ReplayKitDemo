@@ -18,11 +18,25 @@
 		9F1B7AFD242DB08200AAA5C1 /* LLBSDMessaging-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */; };
 		9F1B7AFE242DB08200AAA5C1 /* LLBSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */; };
 		9F1B7B00242DB08200AAA5C1 /* LLBSDConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */; };
+		9F24E2C324333FB0004DB8CA /* ZZRYUVConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2C224333FB0004DB8CA /* ZZRYUVConverter.mm */; };
+		9F24E2DC24334035004DB8CA /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24E2DA24334035004DB8CA /* libyuv.a */; };
+		9F24E2DF2433406F004DB8CA /* ZZRI420Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2DE2433406F004DB8CA /* ZZRI420Frame.m */; };
+		9F24E2E224343540004DB8CA /* ZZRVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */; };
+		9F24E2E524346B5D004DB8CA /* ZZRSocketPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */; };
+		9F24E2F82434D20E004DB8CA /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24E2DA24334035004DB8CA /* libyuv.a */; };
+		9F24E2F92434D21A004DB8CA /* H264EncodeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7A9B242C7C8B00AAA5C1 /* H264EncodeTool.m */; };
+		9F24E2FA2434D21D004DB8CA /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A582242B2D490026727E /* SampleHandler.m */; };
+		9F24E2FB2434D226004DB8CA /* ZZRI420Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2DE2433406F004DB8CA /* ZZRI420Frame.m */; };
+		9F24E2FC2434D229004DB8CA /* ZZRYUVConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2C224333FB0004DB8CA /* ZZRYUVConverter.mm */; };
+		9F24E2FD2434D22C004DB8CA /* ZZRVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */; };
+		9F24E2FE2434D22E004DB8CA /* ZZRSocketPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */; };
 		9F34E90A242DB27600A91CFC /* LLBSDMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF5242DB08200AAA5C1 /* LLBSDMessaging.m */; };
 		9F34E90B242DB27900A91CFC /* LLBSDProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF6242DB08200AAA5C1 /* LLBSDProcessInfo.m */; };
 		9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */; };
 		9F34E90D242DB27E00A91CFC /* LLBSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */; };
 		9F34E90E242DB28000A91CFC /* LLBSDConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */; };
+		9F8677792434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */; };
+		9F86777A2434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */; };
 		9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A544242B2CF00026727E /* AppDelegate.m */; };
 		9FB1A54B242B2CF00026727E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A54A242B2CF00026727E /* ViewController.m */; };
 		9FB1A550242B2CF10026727E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB1A54F242B2CF10026727E /* Assets.xcassets */; };
@@ -112,6 +126,38 @@
 		9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LLBSDMessaging-Constants.m"; sourceTree = "<group>"; };
 		9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDMessage.m; sourceTree = "<group>"; };
 		9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBSDConnection.m; sourceTree = "<group>"; };
+		9F24E2C124333FB0004DB8CA /* ZZRYUVConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZRYUVConverter.h; sourceTree = "<group>"; };
+		9F24E2C224333FB0004DB8CA /* ZZRYUVConverter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZZRYUVConverter.mm; sourceTree = "<group>"; };
+		9F24E2C624334035004DB8CA /* scale_row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale_row.h; sourceTree = "<group>"; };
+		9F24E2C724334035004DB8CA /* scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
+		9F24E2C824334035004DB8CA /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		9F24E2C924334035004DB8CA /* cpu_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_id.h; sourceTree = "<group>"; };
+		9F24E2CA24334035004DB8CA /* video_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_common.h; sourceTree = "<group>"; };
+		9F24E2CB24334035004DB8CA /* compare_row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compare_row.h; sourceTree = "<group>"; };
+		9F24E2CC24334035004DB8CA /* mjpeg_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mjpeg_decoder.h; sourceTree = "<group>"; };
+		9F24E2CD24334035004DB8CA /* rotate_row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate_row.h; sourceTree = "<group>"; };
+		9F24E2CE24334035004DB8CA /* planar_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = planar_functions.h; sourceTree = "<group>"; };
+		9F24E2CF24334035004DB8CA /* scale_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scale_argb.h; sourceTree = "<group>"; };
+		9F24E2D024334035004DB8CA /* compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compare.h; sourceTree = "<group>"; };
+		9F24E2D124334035004DB8CA /* convert_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_argb.h; sourceTree = "<group>"; };
+		9F24E2D224334035004DB8CA /* rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate.h; sourceTree = "<group>"; };
+		9F24E2D324334035004DB8CA /* convert_from_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_from_argb.h; sourceTree = "<group>"; };
+		9F24E2D424334035004DB8CA /* basic_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_types.h; sourceTree = "<group>"; };
+		9F24E2D524334035004DB8CA /* convert_from.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_from.h; sourceTree = "<group>"; };
+		9F24E2D624334035004DB8CA /* convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert.h; sourceTree = "<group>"; };
+		9F24E2D724334035004DB8CA /* rotate_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate_argb.h; sourceTree = "<group>"; };
+		9F24E2D824334035004DB8CA /* macros_msa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros_msa.h; sourceTree = "<group>"; };
+		9F24E2D924334035004DB8CA /* row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = row.h; sourceTree = "<group>"; };
+		9F24E2DA24334035004DB8CA /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
+		9F24E2DB24334035004DB8CA /* libyuv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libyuv.h; sourceTree = "<group>"; };
+		9F24E2DD2433406F004DB8CA /* ZZRI420Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZZRI420Frame.h; path = BroadcastTarget/ZZRI420Frame.h; sourceTree = SOURCE_ROOT; };
+		9F24E2DE2433406F004DB8CA /* ZZRI420Frame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZZRI420Frame.m; path = BroadcastTarget/ZZRI420Frame.m; sourceTree = SOURCE_ROOT; };
+		9F24E2E024343540004DB8CA /* ZZRVideoUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZRVideoUtils.h; sourceTree = "<group>"; };
+		9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZZRVideoUtils.m; sourceTree = "<group>"; };
+		9F24E2E324346B5D004DB8CA /* ZZRSocketPacket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZRSocketPacket.h; sourceTree = "<group>"; };
+		9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZZRSocketPacket.m; sourceTree = "<group>"; };
+		9F8677772434D50300E264B6 /* NTESTPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESTPCircularBuffer.h; sourceTree = "<group>"; };
+		9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NTESTPCircularBuffer.c; sourceTree = "<group>"; };
 		9FB1A540242B2CF00026727E /* ReplayKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReplayKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB1A543242B2CF00026727E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9FB1A544242B2CF00026727E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -154,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F24E2F82434D20E004DB8CA /* libyuv.a in Frameworks */,
 				1B9FD9DABF8910B14DC8AD6E /* Pods_ReplayKitDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F24E2DC24334035004DB8CA /* libyuv.a in Frameworks */,
 				9FB1A57F242B2D490026727E /* ReplayKit.framework in Frameworks */,
 				3C41D6F637DC1BFE46328524 /* Pods_BroadcastTarget.framework in Frameworks */,
 			);
@@ -229,6 +277,43 @@
 			);
 			name = LLBSDMessaging;
 			path = "../../../../Desktop/LLBSDMessaging-master/LLBSDMessaging";
+			sourceTree = "<group>";
+		};
+		9F24E2C42433401A004DB8CA /* libyuv */ = {
+			isa = PBXGroup;
+			children = (
+				9F24E2C524334035004DB8CA /* libyuv */,
+				9F24E2DA24334035004DB8CA /* libyuv.a */,
+				9F24E2DB24334035004DB8CA /* libyuv.h */,
+			);
+			path = libyuv;
+			sourceTree = "<group>";
+		};
+		9F24E2C524334035004DB8CA /* libyuv */ = {
+			isa = PBXGroup;
+			children = (
+				9F24E2C624334035004DB8CA /* scale_row.h */,
+				9F24E2C724334035004DB8CA /* scale.h */,
+				9F24E2C824334035004DB8CA /* version.h */,
+				9F24E2C924334035004DB8CA /* cpu_id.h */,
+				9F24E2CA24334035004DB8CA /* video_common.h */,
+				9F24E2CB24334035004DB8CA /* compare_row.h */,
+				9F24E2CC24334035004DB8CA /* mjpeg_decoder.h */,
+				9F24E2CD24334035004DB8CA /* rotate_row.h */,
+				9F24E2CE24334035004DB8CA /* planar_functions.h */,
+				9F24E2CF24334035004DB8CA /* scale_argb.h */,
+				9F24E2D024334035004DB8CA /* compare.h */,
+				9F24E2D124334035004DB8CA /* convert_argb.h */,
+				9F24E2D224334035004DB8CA /* rotate.h */,
+				9F24E2D324334035004DB8CA /* convert_from_argb.h */,
+				9F24E2D424334035004DB8CA /* basic_types.h */,
+				9F24E2D524334035004DB8CA /* convert_from.h */,
+				9F24E2D624334035004DB8CA /* convert.h */,
+				9F24E2D724334035004DB8CA /* rotate_argb.h */,
+				9F24E2D824334035004DB8CA /* macros_msa.h */,
+				9F24E2D924334035004DB8CA /* row.h */,
+			);
+			path = libyuv;
 			sourceTree = "<group>";
 		};
 		9FB1A537242B2CF00026727E = {
@@ -313,12 +398,23 @@
 		9FB1A580242B2D490026727E /* BroadcastTarget */ = {
 			isa = PBXGroup;
 			children = (
+				9F24E2C42433401A004DB8CA /* libyuv */,
 				9FB1A5A0242B53110026727E /* BroadcastTarget.entitlements */,
 				9F1B7A9C242C7C8B00AAA5C1 /* H264EncodeTool.h */,
 				9F1B7A9B242C7C8B00AAA5C1 /* H264EncodeTool.m */,
 				9FB1A581242B2D490026727E /* SampleHandler.h */,
 				9FB1A582242B2D490026727E /* SampleHandler.m */,
 				9FB1A584242B2D490026727E /* Info.plist */,
+				9F24E2DD2433406F004DB8CA /* ZZRI420Frame.h */,
+				9F24E2DE2433406F004DB8CA /* ZZRI420Frame.m */,
+				9F24E2C124333FB0004DB8CA /* ZZRYUVConverter.h */,
+				9F24E2C224333FB0004DB8CA /* ZZRYUVConverter.mm */,
+				9F24E2E024343540004DB8CA /* ZZRVideoUtils.h */,
+				9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */,
+				9F24E2E324346B5D004DB8CA /* ZZRSocketPacket.h */,
+				9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */,
+				9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */,
+				9F8677772434D50300E264B6 /* NTESTPCircularBuffer.h */,
 			);
 			path = BroadcastTarget;
 			sourceTree = "<group>";
@@ -676,16 +772,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F8677792434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */,
 				9FB1A54B242B2CF00026727E /* ViewController.m in Sources */,
 				9F1B7A9A242C3EB300AAA5C1 /* H264DecodeTool.m in Sources */,
+				9F24E2FB2434D226004DB8CA /* ZZRI420Frame.m in Sources */,
 				9F34E90B242DB27900A91CFC /* LLBSDProcessInfo.m in Sources */,
+				9F24E2FA2434D21D004DB8CA /* SampleHandler.m in Sources */,
 				9F34E90A242DB27600A91CFC /* LLBSDMessaging.m in Sources */,
 				9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */,
+				9F24E2FD2434D22C004DB8CA /* ZZRVideoUtils.m in Sources */,
 				9F1B7A97242C3E4F00AAA5C1 /* AAPLEAGLLayer.m in Sources */,
+				9F24E2F92434D21A004DB8CA /* H264EncodeTool.m in Sources */,
 				9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */,
+				9F24E2FE2434D22E004DB8CA /* ZZRSocketPacket.m in Sources */,
 				9F34E90E242DB28000A91CFC /* LLBSDConnection.m in Sources */,
 				9FB1A556242B2CF10026727E /* main.m in Sources */,
 				9F34E90D242DB27E00A91CFC /* LLBSDMessage.m in Sources */,
+				9F24E2FC2434D229004DB8CA /* ZZRYUVConverter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,12 +812,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F86777A2434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */,
 				9FB1A583242B2D490026727E /* SampleHandler.m in Sources */,
 				9F1B7AFD242DB08200AAA5C1 /* LLBSDMessaging-Constants.m in Sources */,
 				9F1B7AFC242DB08200AAA5C1 /* LLBSDProcessInfo.m in Sources */,
+				9F24E2DF2433406F004DB8CA /* ZZRI420Frame.m in Sources */,
+				9F24E2E224343540004DB8CA /* ZZRVideoUtils.m in Sources */,
 				9F1B7B00242DB08200AAA5C1 /* LLBSDConnection.m in Sources */,
 				9F1B7A9D242C7C8C00AAA5C1 /* H264EncodeTool.m in Sources */,
 				9F1B7AFB242DB08200AAA5C1 /* LLBSDMessaging.m in Sources */,
+				9F24E2C324333FB0004DB8CA /* ZZRYUVConverter.mm in Sources */,
+				9F24E2E524346B5D004DB8CA /* ZZRSocketPacket.m in Sources */,
 				9F1B7AFE242DB08200AAA5C1 /* LLBSDMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -882,10 +990,15 @@
 				CODE_SIGN_ENTITLEMENTS = ReplayKitDemo/ReplayKitDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 268X49LNSH;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ReplayKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BroadcastTarget/libyuv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -901,10 +1014,15 @@
 				CODE_SIGN_ENTITLEMENTS = ReplayKitDemo/ReplayKitDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 268X49LNSH;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ReplayKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BroadcastTarget/libyuv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1039,11 +1157,16 @@
 				CODE_SIGN_ENTITLEMENTS = BroadcastTarget/BroadcastTarget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 268X49LNSH;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BroadcastTarget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BroadcastTarget/libyuv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo.BroadcastTarget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1060,11 +1183,16 @@
 				CODE_SIGN_ENTITLEMENTS = BroadcastTarget/BroadcastTarget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 268X49LNSH;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BroadcastTarget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BroadcastTarget/libyuv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzr.ReplayKitDemo.BroadcastTarget;
 				PRODUCT_NAME = "$(TARGET_NAME)";

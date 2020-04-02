@@ -1,16 +1,20 @@
 PODS:
   - CocoaAsyncSocket (7.6.4)
+  - GoogleWebRTC (1.1.29400)
 
 DEPENDENCIES:
   - CocoaAsyncSocket
+  - GoogleWebRTC
 
 SPEC REPOS:
   trunk:
     - CocoaAsyncSocket
+    - GoogleWebRTC
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  GoogleWebRTC: cfb83bc346435a17fe06bb05f04ad826b858a7fb
 
-PODFILE CHECKSUM: 89c0f4e1244a72719b8b9a66e84814a347d74f34
+PODFILE CHECKSUM: 6e3f3b281c76420438299d71367ea1289e6023af
 
 COCOAPODS: 1.9.0
