@@ -27,29 +27,37 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-#include "NTESTPCircularBuffer.h"
+//
+//  ZZRTPCircularBuffer.m
+//  BroadcastTarget
+//
+//  Created by 张忠瑞 on 2020/4/2.
+//  Copyright © 2020 张忠瑞. All rights reserved.
+//
+
+#import "ZZRTPCircularBuffer.h"
 #include <mach/mach.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define reportNTESResult(result,operation) (_reportNTESResult((result),(operation),strrchr(__FILE__, '/')+1,__LINE__))
-static inline bool _reportNTESResult(kern_return_t result, const char *operation, const char* file, int line) {
+#define reportZZRResult(result,operation) (_reportZZRResult((result),(operation),strrchr(__FILE__, '/')+1,__LINE__))
+static inline bool _reportZZRResult(kern_return_t result, const char *operation, const char* file, int line) {
     if ( result != ERR_SUCCESS ) {
-        printf("%s:%d: %s: %s\n", file, line, operation, mach_error_string(result)); 
+        printf("%s:%d: %s: %s\n", file, line, operation, mach_error_string(result));
         return false;
     }
     return true;
 }
 
-bool _NTESTPCircularBufferInit(NTESTPCircularBuffer *buffer, int32_t length, size_t structSize) {
-    
+bool _ZZRTPCircularBufferInit(ZZRTPCircularBuffer *buffer, int32_t length, size_t structSize) {
+
     assert(length > 0);
-    
-    if ( structSize != sizeof(NTESTPCircularBuffer) ) {
-        fprintf(stderr, "NTESTPCircularBuffer: Header version mismatch. Check for old versions of NTESTPCircularBuffer in your project\n");
+
+    if ( structSize != sizeof(ZZRTPCircularBuffer) ) {
+        fprintf(stderr, "ZZRTPCircularBuffer: Header version mismatch. Check for old versions of ZZRTPCircularBuffer in your project\n");
         abort();
     }
-    
+
     // Keep trying until we get our buffer, needed to handle race conditions
     int retries = 3;
     while ( true ) {
@@ -65,27 +73,27 @@ bool _NTESTPCircularBufferInit(NTESTPCircularBuffer *buffer, int32_t length, siz
                                            VM_FLAGS_ANYWHERE); // allocate anywhere it'll fit
         if ( result != ERR_SUCCESS ) {
             if ( retries-- == 0 ) {
-                reportNTESResult(result, "Buffer allocation");
+                reportZZRResult(result, "Buffer allocation");
                 return false;
             }
             // Try again if we fail
             continue;
         }
-        
+
         // Now replace the second half of the allocation with a virtual copy of the first half. Deallocate the second half...
         result = vm_deallocate(mach_task_self(),
                                bufferAddress + buffer->length,
                                buffer->length);
         if ( result != ERR_SUCCESS ) {
             if ( retries-- == 0 ) {
-                reportNTESResult(result, "Buffer deallocation");
+                reportZZRResult(result, "Buffer deallocation");
                 return false;
             }
             // If this fails somehow, deallocate the whole region and try again
             vm_deallocate(mach_task_self(), bufferAddress, buffer->length);
             continue;
         }
-        
+
         // Re-map the buffer to the address space immediately after the buffer
         vm_address_t virtualAddress = bufferAddress + buffer->length;
         vm_prot_t cur_prot, max_prot;
@@ -102,14 +110,14 @@ bool _NTESTPCircularBufferInit(NTESTPCircularBuffer *buffer, int32_t length, siz
                           VM_INHERIT_DEFAULT);
         if ( result != ERR_SUCCESS ) {
             if ( retries-- == 0 ) {
-                reportNTESResult(result, "Remap buffer memory");
+                reportZZRResult(result, "Remap buffer memory");
                 return false;
             }
             // If this remap failed, we hit a race condition, so deallocate and try again
             vm_deallocate(mach_task_self(), bufferAddress, buffer->length);
             continue;
         }
-        
+
         if ( virtualAddress != bufferAddress+buffer->length ) {
             // If the memory is not contiguous, clean up both allocated buffers and try again
             if ( retries-- == 0 ) {
@@ -121,29 +129,29 @@ bool _NTESTPCircularBufferInit(NTESTPCircularBuffer *buffer, int32_t length, siz
             vm_deallocate(mach_task_self(), bufferAddress, buffer->length);
             continue;
         }
-        
+
         buffer->buffer = (void*)bufferAddress;
         buffer->fillCount = 0;
         buffer->head = buffer->tail = 0;
         buffer->atomic = true;
-        
+
         return true;
     }
     return false;
 }
 
-void NTESTPCircularBufferCleanup(NTESTPCircularBuffer *buffer) {
+void ZZRTPCircularBufferCleanup(ZZRTPCircularBuffer *buffer) {
     vm_deallocate(mach_task_self(), (vm_address_t)buffer->buffer, buffer->length * 2);
-    memset(buffer, 0, sizeof(NTESTPCircularBuffer));
+    memset(buffer, 0, sizeof(ZZRTPCircularBuffer));
 }
 
-void NTESTPCircularBufferClear(NTESTPCircularBuffer *buffer) {
+void ZZRTPCircularBufferClear(ZZRTPCircularBuffer *buffer) {
     int32_t fillCount;
-    if ( NTESTPCircularBufferTail(buffer, &fillCount) ) {
-        NTESTPCircularBufferConsume(buffer, fillCount);
+    if ( ZZRTPCircularBufferTail(buffer, &fillCount) ) {
+        ZZRTPCircularBufferConsume(buffer, fillCount);
     }
 }
 
-void  NTESTPCircularBufferSetAtomic(NTESTPCircularBuffer *buffer, bool atomic) {
+void  ZZRTPCircularBufferSetAtomic(ZZRTPCircularBuffer *buffer, bool atomic) {
     buffer->atomic = atomic;
 }

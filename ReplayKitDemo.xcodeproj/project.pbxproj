@@ -35,8 +35,8 @@
 		9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF7242DB08200AAA5C1 /* LLBSDMessaging-Constants.m */; };
 		9F34E90D242DB27E00A91CFC /* LLBSDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AF8242DB08200AAA5C1 /* LLBSDMessage.m */; };
 		9F34E90E242DB28000A91CFC /* LLBSDConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B7AFA242DB08200AAA5C1 /* LLBSDConnection.m */; };
-		9F8677792434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */; };
-		9F86777A2434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */; };
+		9F8677A42435D53100E264B6 /* ZZRTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677A32435D53100E264B6 /* ZZRTPCircularBuffer.c */; };
+		9F8677A52435D73900E264B6 /* ZZRTPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F8677A32435D53100E264B6 /* ZZRTPCircularBuffer.c */; };
 		9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A544242B2CF00026727E /* AppDelegate.m */; };
 		9FB1A54B242B2CF00026727E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1A54A242B2CF00026727E /* ViewController.m */; };
 		9FB1A550242B2CF10026727E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB1A54F242B2CF10026727E /* Assets.xcassets */; };
@@ -156,8 +156,8 @@
 		9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZZRVideoUtils.m; sourceTree = "<group>"; };
 		9F24E2E324346B5D004DB8CA /* ZZRSocketPacket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZRSocketPacket.h; sourceTree = "<group>"; };
 		9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZZRSocketPacket.m; sourceTree = "<group>"; };
-		9F8677772434D50300E264B6 /* NTESTPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESTPCircularBuffer.h; sourceTree = "<group>"; };
-		9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NTESTPCircularBuffer.c; sourceTree = "<group>"; };
+		9F8677A22435D53100E264B6 /* ZZRTPCircularBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZRTPCircularBuffer.h; sourceTree = "<group>"; };
+		9F8677A32435D53100E264B6 /* ZZRTPCircularBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ZZRTPCircularBuffer.c; sourceTree = "<group>"; };
 		9FB1A540242B2CF00026727E /* ReplayKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReplayKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB1A543242B2CF00026727E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9FB1A544242B2CF00026727E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -413,8 +413,8 @@
 				9F24E2E124343540004DB8CA /* ZZRVideoUtils.m */,
 				9F24E2E324346B5D004DB8CA /* ZZRSocketPacket.h */,
 				9F24E2E424346B5D004DB8CA /* ZZRSocketPacket.m */,
-				9F8677782434D50400E264B6 /* NTESTPCircularBuffer.c */,
-				9F8677772434D50300E264B6 /* NTESTPCircularBuffer.h */,
+				9F8677A22435D53100E264B6 /* ZZRTPCircularBuffer.h */,
+				9F8677A32435D53100E264B6 /* ZZRTPCircularBuffer.c */,
 			);
 			path = BroadcastTarget;
 			sourceTree = "<group>";
@@ -772,7 +772,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F8677792434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */,
 				9FB1A54B242B2CF00026727E /* ViewController.m in Sources */,
 				9F1B7A9A242C3EB300AAA5C1 /* H264DecodeTool.m in Sources */,
 				9F24E2FB2434D226004DB8CA /* ZZRI420Frame.m in Sources */,
@@ -781,6 +780,7 @@
 				9F34E90A242DB27600A91CFC /* LLBSDMessaging.m in Sources */,
 				9FB1A545242B2CF00026727E /* AppDelegate.m in Sources */,
 				9F24E2FD2434D22C004DB8CA /* ZZRVideoUtils.m in Sources */,
+				9F8677A52435D73900E264B6 /* ZZRTPCircularBuffer.c in Sources */,
 				9F1B7A97242C3E4F00AAA5C1 /* AAPLEAGLLayer.m in Sources */,
 				9F24E2F92434D21A004DB8CA /* H264EncodeTool.m in Sources */,
 				9F34E90C242DB27B00A91CFC /* LLBSDMessaging-Constants.m in Sources */,
@@ -812,12 +812,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F86777A2434D50400E264B6 /* NTESTPCircularBuffer.c in Sources */,
 				9FB1A583242B2D490026727E /* SampleHandler.m in Sources */,
 				9F1B7AFD242DB08200AAA5C1 /* LLBSDMessaging-Constants.m in Sources */,
 				9F1B7AFC242DB08200AAA5C1 /* LLBSDProcessInfo.m in Sources */,
 				9F24E2DF2433406F004DB8CA /* ZZRI420Frame.m in Sources */,
 				9F24E2E224343540004DB8CA /* ZZRVideoUtils.m in Sources */,
+				9F8677A42435D53100E264B6 /* ZZRTPCircularBuffer.c in Sources */,
 				9F1B7B00242DB08200AAA5C1 /* LLBSDConnection.m in Sources */,
 				9F1B7A9D242C7C8C00AAA5C1 /* H264EncodeTool.m in Sources */,
 				9F1B7AFB242DB08200AAA5C1 /* LLBSDMessaging.m in Sources */,

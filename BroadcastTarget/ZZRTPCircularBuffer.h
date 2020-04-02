@@ -1,3 +1,4 @@
+
 //
 //  NTESTPCircularBuffer.h
 //  Circular/Ring buffer implementation
@@ -10,7 +11,7 @@
 //  This implementation makes use of a virtual memory mapping technique that inserts a virtual copy
 //  of the buffer memory directly after the buffer's end, negating the need for any buffer wrap-around
 //  logic. Clients can simply use the returned memory address as if it were contiguous space.
-//  
+//
 //  The implementation is thread-safe in the case of a single producer and single consumer.
 //
 //  Virtual memory technique originally proposed by Philip Howard (http://vrb.slashusr.org/), and
@@ -39,8 +40,16 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-#ifndef NTESTPCircularBuffer_h
-#define NTESTPCircularBuffer_h
+//
+//  ZZRTPCircularBuffer.h
+//  BroadcastTarget
+//
+//  Created by 张忠瑞 on 2020/4/2.
+//  Copyright © 2020 张忠瑞. All rights reserved.
+//
+
+#ifndef ZZRSTPCircularBuffer_h
+#define ZZRSTPCircularBuffer_h
 
 #include <libkern/OSAtomic.h>
 #include <string.h>
@@ -50,7 +59,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
+
 typedef struct {
     void             *buffer;
     int32_t           length;
@@ -58,46 +67,46 @@ typedef struct {
     int32_t           head;
     volatile int32_t  fillCount;
     bool              atomic;
-} NTESTPCircularBuffer;
+} ZZRTPCircularBuffer;
 
 /*!
- * Initialise buffer
- *
- *  Note that the length is advisory only: Because of the way the
- *  memory mirroring technique works, the true buffer length will
- *  be multiples of the device page size (e.g. 4096 bytes)
- *
- *  If you intend to use the AudioBufferList utilities, you should
- *  always allocate a bit more space than you need for pure audio
- *  data, so there's room for the metadata. How much extra is required
- *  depends on how many AudioBufferList structures are used, which is
- *  a function of how many audio frames each buffer holds. A good rule
- *  of thumb is to add 15%, or at least another 2048 bytes or so.
- *
- * @param buffer Circular buffer
- * @param length Length of buffer
- */
-#define NTESTPCircularBufferInit(buffer, length) \
-    _NTESTPCircularBufferInit(buffer, length, sizeof(*buffer))
-bool _NTESTPCircularBufferInit(NTESTPCircularBuffer *buffer, int32_t length, size_t structSize);
+* Initialise buffer
+*
+*  Note that the length is advisory only: Because of the way the
+*  memory mirroring technique works, the true buffer length will
+*  be multiples of the device page size (e.g. 4096 bytes)
+*
+*  If you intend to use the AudioBufferList utilities, you should
+*  always allocate a bit more space than you need for pure audio
+*  data, so there's room for the metadata. How much extra is required
+*  depends on how many AudioBufferList structures are used, which is
+*  a function of how many audio frames each buffer holds. A good rule
+*  of thumb is to add 15%, or at least another 2048 bytes or so.
+*
+* @param buffer Circular buffer
+* @param length Length of buffer
+*/
+#define ZZRTPCircularBufferInit(buffer, length) \
+    _ZZRTPCircularBufferInit(buffer, length, sizeof(*buffer))
+bool _ZZRTPCircularBufferInit(ZZRTPCircularBuffer *buffer, int32_t length, size_t structSize);
 
 /*!
  * Cleanup buffer
  *
  *  Releases buffer resources.
  */
-void  NTESTPCircularBufferCleanup(NTESTPCircularBuffer *buffer);
+void  ZZRTPCircularBufferCleanup(ZZRTPCircularBuffer *buffer);
 
 /*!
  * Clear buffer
  *
  *  Resets buffer to original, empty state.
  *
- *  This is safe for use by consumer while producer is accessing 
+ *  This is safe for use by consumer while producer is accessing
  *  buffer.
  */
-void  NTESTPCircularBufferClear(NTESTPCircularBuffer *buffer);
-    
+void  ZZRTPCircularBufferClear(ZZRTPCircularBuffer *buffer);
+
 /*!
  * Set the atomicity
  *
@@ -112,7 +121,7 @@ void  NTESTPCircularBufferClear(NTESTPCircularBuffer *buffer);
  * @param buffer Circular buffer
  * @param atomic Whether the buffer is atomic (default true)
  */
-void  NTESTPCircularBufferSetAtomic(NTESTPCircularBuffer *buffer, bool atomic);
+void  ZZRTPCircularBufferSetAtomic(ZZRTPCircularBuffer *buffer, bool atomic);
 
 // Reading (consuming)
 
@@ -126,7 +135,7 @@ void  NTESTPCircularBufferSetAtomic(NTESTPCircularBuffer *buffer, bool atomic);
  * @param availableBytes On output, the number of bytes ready for reading
  * @return Pointer to the first bytes ready for reading, or NULL if buffer is empty
  */
-static __inline__ __attribute__((always_inline)) void* NTESTPCircularBufferTail(NTESTPCircularBuffer *buffer, int32_t* availableBytes) {
+static __inline__ __attribute__((always_inline)) void* ZZRTPCircularBufferTail(ZZRTPCircularBuffer *buffer, int32_t* availableBytes) {
     *availableBytes = buffer->fillCount;
     if ( *availableBytes == 0 ) return NULL;
     return (void*)((char*)buffer->buffer + buffer->tail);
@@ -140,7 +149,7 @@ static __inline__ __attribute__((always_inline)) void* NTESTPCircularBufferTail(
  * @param buffer Circular buffer
  * @param amount Number of bytes to consume
  */
-static __inline__ __attribute__((always_inline)) void NTESTPCircularBufferConsume(NTESTPCircularBuffer *buffer, int32_t amount) {
+static __inline__ __attribute__((always_inline)) void ZZRTPCircularBufferConsume(ZZRTPCircularBuffer *buffer, int32_t amount) {
     buffer->tail = (buffer->tail + amount) % buffer->length;
 
     if ( buffer->atomic ) {
@@ -162,12 +171,12 @@ static __inline__ __attribute__((always_inline)) void NTESTPCircularBufferConsum
  * @param availableBytes On output, the number of bytes ready for writing
  * @return Pointer to the first bytes ready for writing, or NULL if buffer is full
  */
-static __inline__ __attribute__((always_inline)) void* NTESTPCircularBufferHead(NTESTPCircularBuffer *buffer, int32_t* availableBytes) {
+static __inline__ __attribute__((always_inline)) void* ZZRTPCircularBufferHead(ZZRTPCircularBuffer *buffer, int32_t* availableBytes) {
     *availableBytes = (buffer->length - buffer->fillCount);
     if ( *availableBytes == 0 ) return NULL;
     return (void*)((char*)buffer->buffer + buffer->head);
 }
-    
+
 // Writing (producing)
 
 /*!
@@ -178,7 +187,7 @@ static __inline__ __attribute__((always_inline)) void* NTESTPCircularBufferHead(
  * @param buffer Circular buffer
  * @param amount Number of bytes to produce
  */
-static __inline__ __attribute__((always_inline)) void NTESTPCircularBufferProduce(NTESTPCircularBuffer *buffer, int32_t amount) {
+static __inline__ __attribute__((always_inline)) void ZZRTPCircularBufferProduce(ZZRTPCircularBuffer *buffer, int32_t amount) {
     buffer->head = (buffer->head + amount) % buffer->length;
     if ( buffer->atomic ) {
         OSAtomicAdd32Barrier(amount, &buffer->fillCount);
@@ -198,20 +207,20 @@ static __inline__ __attribute__((always_inline)) void NTESTPCircularBufferProduc
  * @param len Number of bytes in source buffer
  * @return true if bytes copied, false if there was insufficient space
  */
-static __inline__ __attribute__((always_inline)) bool NTESTPCircularBufferProduceBytes(NTESTPCircularBuffer *buffer, const void* src, int32_t len) {
+static __inline__ __attribute__((always_inline)) bool ZZRTPCircularBufferProduceBytes(ZZRTPCircularBuffer *buffer, const void* src, int32_t len) {
     int32_t space;
-    void *ptr = NTESTPCircularBufferHead(buffer, &space);
+    void *ptr = ZZRTPCircularBufferHead(buffer, &space);
     if ( space < len ) return false;
     memcpy(ptr, src, len);
-    NTESTPCircularBufferProduce(buffer, len);
+    ZZRTPCircularBufferProduce(buffer, len);
     return true;
 }
 
 /*!
  * Deprecated method
  */
-static __inline__ __attribute__((always_inline)) __deprecated_msg("use NTESTPCircularBufferSetAtomic(false) and NTESTPCircularBufferConsume instead")
-void NTESTPCircularBufferConsumeNoBarrier(NTESTPCircularBuffer *buffer, int32_t amount) {
+static __inline__ __attribute__((always_inline)) __deprecated_msg("use ZZRTPCircularBufferSetAtomic(false) and ZZRTPCircularBufferConsume instead")
+void ZZRTPCircularBufferConsumeNoBarrier(ZZRTPCircularBuffer *buffer, int32_t amount) {
     buffer->tail = (buffer->tail + amount) % buffer->length;
     buffer->fillCount -= amount;
     assert(buffer->fillCount >= 0);
@@ -220,8 +229,8 @@ void NTESTPCircularBufferConsumeNoBarrier(NTESTPCircularBuffer *buffer, int32_t 
 /*!
  * Deprecated method
  */
-static __inline__ __attribute__((always_inline)) __deprecated_msg("use NTESTPCircularBufferSetAtomic(false) and NTESTPCircularBufferProduce instead")
-void NTESTPCircularBufferProduceNoBarrier(NTESTPCircularBuffer *buffer, int32_t amount) {
+static __inline__ __attribute__((always_inline)) __deprecated_msg("use ZZRTPCircularBufferSetAtomic(false) and ZZRTPCircularBufferProduce instead")
+void ZZRTPCircularBufferProduceNoBarrier(ZZRTPCircularBuffer *buffer, int32_t amount) {
     buffer->head = (buffer->head + amount) % buffer->length;
     buffer->fillCount += amount;
     assert(buffer->fillCount <= buffer->length);
@@ -232,3 +241,4 @@ void NTESTPCircularBufferProduceNoBarrier(NTESTPCircularBuffer *buffer, int32_t 
 #endif
 
 #endif
+

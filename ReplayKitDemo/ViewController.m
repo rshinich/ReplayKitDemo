@@ -16,7 +16,7 @@
 
 #import <WebRTC/WebRTC.h>
 #import "ZZRSocketPacket.h"
-#import "NTESTPCircularBuffer.h"
+#import "ZZRTPCircularBuffer.h"
 #import "ZZRI420Frame.h"
 
 @interface ViewController ()<H264DecodeFrameCallbackDelegate,GCDAsyncSocketDelegate,LLBSDConnectionServerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
@@ -32,7 +32,7 @@
 
 @property (nonatomic ,strong) NSMutableArray               *clientSocketArr;
 
-@property (nonatomic, assign) NTESTPCircularBuffer *recvBuffer;
+@property (nonatomic, assign) ZZRTPCircularBuffer        *recvBuffer;
 
 @end
 
@@ -83,8 +83,8 @@
 
 - (void)setupSocket {
 
-    _recvBuffer = (NTESTPCircularBuffer *)malloc(sizeof(NTESTPCircularBuffer)); // 需要释放
-    NTESTPCircularBufferInit(_recvBuffer, kRecvBufferMaxSize);
+    _recvBuffer = (ZZRTPCircularBuffer *)malloc(sizeof(ZZRTPCircularBuffer)); // 需要释放
+    ZZRTPCircularBufferInit(_recvBuffer, kRecvBufferMaxSize);
 
     self.clientSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
 
@@ -133,7 +133,7 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
 
-    NTESTPCircularBufferClear(self.recvBuffer);
+    ZZRTPCircularBufferClear(self.recvBuffer);
 
     [self.clientSocketArr addObject:newSocket];
     [newSocket readDataWithTimeout:-1 tag:100];
@@ -206,11 +206,11 @@
 
         [self handleRecvBuffer];
 
-        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+        ZZRTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
 
     } else if (currentDataSize >= targetDataSize && currentDataSize != -1) {
         //加上新的数据之后，已经满足一帧
-        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+        ZZRTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
 
         currentDataSize = -1;
         [self handleRecvBuffer];
@@ -218,7 +218,7 @@
     } else {
 
         //不够一帧，提那家不处理
-        NTESTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
+        ZZRTPCircularBufferProduceBytes(self.recvBuffer, data.bytes, (int32_t)data.length);
     }
 
     // 读取到服务端数据值后,能再次读取
@@ -228,12 +228,12 @@
 - (void)handleRecvBuffer {
 
     int32_t availableBytes = 0;
-    void * buffer = NTESTPCircularBufferTail(self.recvBuffer, &availableBytes);
+    void * buffer = ZZRTPCircularBufferTail(self.recvBuffer, &availableBytes);
     int32_t headSize = sizeof(ZZRSocketHead);
 
     if(availableBytes <= headSize) {
         //        NSLog(@" > 不够文件头");
-        NTESTPCircularBufferClear(self.recvBuffer);
+        ZZRTPCircularBufferClear(self.recvBuffer);
         return;
     }
 
@@ -244,14 +244,14 @@
 
     if(dataLen > availableBytes - headSize && dataLen >0) {
         //        NSLog(@" > 不够数据体");
-        NTESTPCircularBufferClear(self.recvBuffer);
+        ZZRTPCircularBufferClear(self.recvBuffer);
         return;
     }
 
     void *data = malloc(dataLen);
     memset(data, 0, dataLen);
     memcpy(data, buffer + headSize, dataLen);
-    NTESTPCircularBufferClear(self.recvBuffer); // 处理完一帧数据就清空缓存
+    ZZRTPCircularBufferClear(self.recvBuffer); // 处理完一帧数据就清空缓存
 
 //    if([self respondsToSelector:@selector(onRecvData:)]) {
 //        @autoreleasepool {
@@ -280,7 +280,7 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NTESTPCircularBufferClear(self.recvBuffer);
+    ZZRTPCircularBufferClear(self.recvBuffer);
 
     NSLog(@"断开连接");
     self.clientSocket.delegate = nil;
